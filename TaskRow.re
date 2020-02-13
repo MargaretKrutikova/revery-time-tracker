@@ -12,14 +12,13 @@ let statusToBgColor = fun
   | Done(_)  => Colors.blue;
 
 let make = (~task: TimeTracker.Task.t, ~dispatch, ()) => {
-  let statusString = {
+  let statusString =
     switch (task.status) {
-      | Running(time) => "Running " ++ (time |> string_of_float)
+      | Running(time)
+      | Paused(time)
+      | Done(time)  => time |> string_of_float
       | NotStarted => "Not Started"
-      | Paused(time) => "Paused "++ (time |> string_of_float)
-      | Done(time)  => "Done " ++ (time |> string_of_float)
-    }
-  };
+    };
   <View style=Style.[border(~width=3, ~color=Colors.black),
   height(50),
   width(400),
@@ -66,7 +65,7 @@ let make = (~task: TimeTracker.Task.t, ~dispatch, ()) => {
 }
 {
   switch (task.status) {
-    | NotStarted => <View />
+    | NotStarted | Done(_) => <View />
     | other =>
       <AppButton label="Done" onClick={_ => dispatch(TaskDone(task.id))} />
   }
