@@ -23,6 +23,7 @@ let%component make = () => {
       dispatch(TaskAdded);
     };
 
+
   <View>
   <View>
   <Input
@@ -33,12 +34,14 @@ let%component make = () => {
     onKeyDown
   />
 </View>
+<Ticker onTick={t => dispatch(Tick(t |> Time.toFloatSeconds))}>
+
   <ScrollView style={Style.[width(400), height(400)]}>
   {state.tasks
     |> List.rev
-   |> List.map((task: TimeTracker.Task.t) => <TaskRow task />)
+   |> List.map((task: TimeTracker.Task.t) => <TaskRow task dispatch />)
    |> React.listToElement}
    </ScrollView>
-
+</Ticker>
   </View>;
 };
