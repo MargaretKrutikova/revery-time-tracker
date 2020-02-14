@@ -49,10 +49,9 @@ let init = app => {
     ];
 
   let innerStyle = Style.[flexDirection(`Row), alignItems(`FlexEnd)];
-
   let element =
     <View style=containerStyle>
-      <View style=innerStyle> <TaskList /> </View>
+      <View style=innerStyle> <TaskList window=win /> </View>
     </View>;
 
   let _ = UI.start(win, element);

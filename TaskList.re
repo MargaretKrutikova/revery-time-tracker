@@ -4,7 +4,7 @@ open Revery.UI.Components;
 
 module Styles = {};
 
-let%component make = () => {
+let%component make = (~window, ()) => {
   let%hook (state, dispatch) =
     Hooks.reducer(
       ~initialState=TimeTracker.State.init(),
@@ -37,7 +37,9 @@ let%component make = () => {
       <ScrollView style=Style.[height(400), paddingHorizontal(20)]>
         {state.tasks
          |> List.rev
-         |> List.map((task: TimeTracker.Task.t) => <TaskRow task dispatch />)
+         |> List.map((task: TimeTracker.Task.t) =>
+              <TaskRow window task dispatch />
+            )
          |> React.listToElement}
       </ScrollView>
     </Ticker>

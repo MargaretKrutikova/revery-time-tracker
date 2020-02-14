@@ -12,7 +12,16 @@ let statusToBgColor =
   | Paused(_) => Color.rgb(1.0, 0.9, 0.6)
   | Done(_) => Color.rgb(197.0 /. 255.0, 220.0 /. 255.0, 251.0 /. 255.0);
 
-let make = (~task: TimeTracker.Task.t, ~dispatch, ()) => {
+let showAlert = (window: Window.t) => {
+  Sdl2.MessageBox.showSimple(
+    Warning,
+    "Task can't be set to done",
+    "The task has not been started and can't be moved to done.",
+    Some(window.sdlWindow),
+  );
+};
+
+let make = (~task: TimeTracker.Task.t, ~window, ~dispatch, ()) => {
   let statusString =
     switch (task.status) {
     | Running(time)
@@ -79,7 +88,10 @@ let make = (~task: TimeTracker.Task.t, ~dispatch, ()) => {
        }}
       <IconButton
         asset="done.png"
-        onClick={_ => dispatch(State.TaskDone(task.id))}
+        onClick={_ => {
+          showAlert(window);
+          dispatch(State.TaskDone(task.id));
+        }}
       />
       <IconButton
         asset="remove.png"
