@@ -10,15 +10,23 @@ let init = app => {
   let containerStyle =
     Style.[
       position(`Absolute),
-      alignItems(`Stretch),
+      alignItems(`Center),
+      justifyContent(`Center),
       bottom(0),
       top(0),
       left(0),
       right(0),
-      backgroundColor(Color.rgb(0.08, 0.6, 0.6)),
     ];
 
-  let element = <View style=containerStyle> <TaskList window=win /> </View>;
+  let text =
+    Style.[
+      fontSize(22),
+      fontFamily("Roboto-Regular.ttf"),
+      color(Colors.black),
+    ];
+
+  let element =
+    <View style=containerStyle> <Text style=text text="Hello world" /> </View>;
   let _ = UI.start(win, element);
   ();
 };
