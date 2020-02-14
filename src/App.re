@@ -18,7 +18,7 @@ let init = app => {
       backgroundColor(Color.rgb(0.08, 0.6, 0.6)),
     ];
 
-  let element = <View style=containerStyle> <TaskList window=win /> </View>;
+  let element = <View style=containerStyle> <TaskList /> </View>;
   let _ = UI.start(win, element);
   ();
 };

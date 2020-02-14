@@ -19,16 +19,11 @@ module Styles = {
       marginBottom(15),
       minWidth(500),
     ];
-
-  let scrollView = Style.[alignItems(`Stretch), flexGrow(1)];
 };
 
-let%component make = (~window, ()) => {
+let%component make = () => {
   let%hook (state, dispatch) =
-    Hooks.reducer(
-      ~initialState=TimeTracker.State.init(),
-      TimeTracker.State.reducer,
-    );
+    Hooks.reducer(~initialState=TimeTracker.init(), TimeTracker.reducer);
 
   let onKeyDown = (event: NodeEvents.keyEventParams) =>
     if (event.keycode == 13) {
@@ -45,15 +40,11 @@ let%component make = (~window, ()) => {
         onKeyDown
       />
     </View>
-    <ScrollView style=Styles.scrollView>
-      <Ticker onTick={t => dispatch(Tick(t |> Time.toFloatSeconds))}>
-        {state.tasks
-         |> List.rev
-         |> List.map((task: TimeTracker.Task.t) =>
-              <TaskRow window task dispatch />
-            )
-         |> React.listToElement}
-      </Ticker>
-    </ScrollView>
+    <View>
+      {state.tasks
+       |> List.rev
+       |> List.map((task: TimeTracker.task) => <TaskRow task />)
+       |> React.listToElement}
+    </View>
   </View>;
 };
