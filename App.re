@@ -52,9 +52,7 @@ let init = app => {
 
   let element =
     <View style=containerStyle>
-    <View style=innerStyle>
-       <TaskList />
-      </View>
+      <View style=innerStyle> <TaskList /> </View>
     </View>;
 
   let _ = UI.start(win, element);

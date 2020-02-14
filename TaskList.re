@@ -23,25 +23,23 @@ let%component make = () => {
       dispatch(TaskAdded);
     };
 
-
   <View>
-  <View>
-  <Input
-    placeholder="Task name"
-    onChange={(value, _) => {dispatch(NewTaskNameSet(value))}}
-    value={state.newTaskName}
-    style=input
-    onKeyDown
-  />
-</View>
-<Ticker onTick={t => dispatch(Tick(t |> Time.toFloatSeconds))}>
-
-  <ScrollView style={Style.[width(400), height(400)]}>
-  {state.tasks
-    |> List.rev
-   |> List.map((task: TimeTracker.Task.t) => <TaskRow task dispatch />)
-   |> React.listToElement}
-   </ScrollView>
-</Ticker>
+    <View>
+      <Input
+        placeholder="Task name"
+        onChange={(value, _) => {dispatch(NewTaskNameSet(value))}}
+        value={state.newTaskName}
+        style=input
+        onKeyDown
+      />
+    </View>
+    <Ticker onTick={t => dispatch(Tick(t |> Time.toFloatSeconds))}>
+      <ScrollView style=Style.[height(400), paddingHorizontal(20)]>
+        {state.tasks
+         |> List.rev
+         |> List.map((task: TimeTracker.Task.t) => <TaskRow task dispatch />)
+         |> React.listToElement}
+      </ScrollView>
+    </Ticker>
   </View>;
 };
