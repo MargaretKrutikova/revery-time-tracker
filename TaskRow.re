@@ -21,18 +21,16 @@ module Styles = {
       paddingHorizontal(15),
       marginBottom(1),
     ];
-  let taskName =
+
+  let text =
     Style.[
+      fontSize(22),
       fontFamily("Roboto-Regular.ttf"),
-      fontSize(16),
       color(Colors.black),
     ];
-  let time =
-    Style.[
-      fontFamily("Roboto-Regular.ttf"),
-      fontSize(16),
-      color(Colors.black),
-    ];
+  let taskName = text;
+  let time = text;
+
   let actions =
     Style.[
       width(125),

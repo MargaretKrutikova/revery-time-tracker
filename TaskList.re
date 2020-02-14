@@ -17,6 +17,7 @@ module Styles = {
       border(~width=0, ~color=Colors.transparentWhite),
       borderBottom(~width=1, ~color=Colors.black),
       marginBottom(15),
+      minWidth(500),
     ];
 
   let scrollView = Style.[alignItems(`Stretch), flexGrow(1)];

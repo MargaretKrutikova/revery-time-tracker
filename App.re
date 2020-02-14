@@ -15,6 +15,7 @@ let init = app => {
       top(0),
       left(0),
       right(0),
+      backgroundColor(Color.rgb(0.08, 0.6, 0.6)),
     ];
 
   let element = <View style=containerStyle> <TaskList window=win /> </View>;
