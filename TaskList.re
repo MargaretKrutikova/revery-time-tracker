@@ -2,7 +2,25 @@ open Revery;
 open Revery.UI;
 open Revery.UI.Components;
 
-module Styles = {};
+module Styles = {
+  let container =
+    Style.[
+      paddingHorizontal(20),
+      paddingVertical(20),
+      alignItems(`Stretch),
+      flexGrow(1),
+    ];
+
+  let input =
+    Style.[
+      fontSize(24),
+      border(~width=0, ~color=Colors.transparentWhite),
+      borderBottom(~width=1, ~color=Colors.black),
+      marginBottom(15),
+    ];
+
+  let scrollView = Style.[alignItems(`Stretch), flexGrow(1)];
+};
 
 let%component make = (~window, ()) => {
   let%hook (state, dispatch) =
@@ -11,37 +29,30 @@ let%component make = (~window, ()) => {
       TimeTracker.State.reducer,
     );
 
-  let input =
-    Style.[
-      fontSize(22),
-      border(~width=0, ~color=Colors.transparentWhite),
-      width(4000),
-    ];
-
   let onKeyDown = (event: NodeEvents.keyEventParams) =>
     if (event.keycode == 13) {
       dispatch(TaskAdded);
     };
 
-  <View>
+  <View style=Styles.container>
     <View>
       <Input
         placeholder="Task name"
         onChange={(value, _) => {dispatch(NewTaskNameSet(value))}}
         value={state.newTaskName}
-        style=input
+        style=Styles.input
         onKeyDown
       />
     </View>
-    <Ticker onTick={t => dispatch(Tick(t |> Time.toFloatSeconds))}>
-      <ScrollView style=Style.[height(400), paddingHorizontal(20)]>
+    <ScrollView style=Styles.scrollView>
+      <Ticker onTick={t => dispatch(Tick(t |> Time.toFloatSeconds))}>
         {state.tasks
          |> List.rev
          |> List.map((task: TimeTracker.Task.t) =>
               <TaskRow window task dispatch />
             )
          |> React.listToElement}
-      </ScrollView>
-    </Ticker>
+      </Ticker>
+    </ScrollView>
   </View>;
 };
