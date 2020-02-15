@@ -40,11 +40,13 @@ let%component make = () => {
         onKeyDown
       />
     </View>
-    <View>
-      {state.tasks
-       |> List.rev
-       |> List.map((task: TimeTracker.task) => <TaskRow task />)
-       |> React.listToElement}
-    </View>
+    <Ticker onTick={t => dispatch(Tick(t |> Time.toFloatSeconds))}>
+      <View>
+        {state.tasks
+         |> List.rev
+         |> List.map((task: TimeTracker.task) => <TaskRow task />)
+         |> React.listToElement}
+      </View>
+    </Ticker>
   </View>;
 };

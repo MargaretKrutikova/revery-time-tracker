@@ -6,7 +6,9 @@ module Styles = {
   let container =
     Style.[
       height(50),
-      justifyContent(`Center),
+      flexDirection(`Row),
+      justifyContent(`SpaceAround),
+      alignItems(`Center),
       backgroundColor(Color.rgb(0.86, 0.86, 0.86)),
       paddingHorizontal(15),
       marginBottom(1),
@@ -22,6 +24,7 @@ module Styles = {
 
 let make = (~task: TimeTracker.task, ()) => {
   <View style=Styles.container>
-    <View> <Text style=Styles.text text={task.name} /> </View>
+    <Text style=Styles.text text={task.name} />
+    <Text style=Styles.text text={Utils.formatTime(task.elapsed)} />
   </View>;
 };
