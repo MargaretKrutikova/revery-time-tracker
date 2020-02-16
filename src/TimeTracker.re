@@ -5,6 +5,16 @@ type state = {
 
 let init = () => {newTaskName: "", tasks: []};
 
+type action =
+  | NewTaskNameSet(string)
+  | TaskAdded
+  | Tick(float)
+  | TaskStarted(string)
+  | TaskPaused(string)
+  | TaskResumed(string)
+  | TaskDone(string)
+  | TaskRemoved(string);
+
 let updateTaskById = (id, update, tasks) =>
   List.map((task: Task.t) => task.id == id ? update(task) : task, tasks);
 
@@ -16,16 +26,6 @@ let updateTaskStatus = (id, updateStatus, state) => {
 let getRunningTask = state =>
   state.tasks
   |> List.find_opt((task: Task.t) => task.status |> TaskStatus.isRunning);
-
-type action =
-  | NewTaskNameSet(string)
-  | TaskAdded
-  | Tick(float)
-  | TaskStarted(string)
-  | TaskPaused(string)
-  | TaskResumed(string)
-  | TaskDone(string)
-  | TaskRemoved(string);
 
 let reducer = (action, state) => {
   switch (action) {
