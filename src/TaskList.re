@@ -2,33 +2,16 @@ open Revery;
 open Revery.UI;
 open Revery.UI.Components;
 
-module Styles = {
-  let container = Style.[padding(20), alignItems(`Stretch), flexGrow(1)];
-  let input =
-    Style.[
-      fontSize(24),
-      border(~width=0, ~color=Colors.transparentWhite),
-      borderBottom(~width=1, ~color=Colors.black),
-      marginBottom(15),
-      minWidth(500),
-    ];
-
-  let scrollView = Style.[alignItems(`Stretch), flexGrow(1)];
-};
-
 let%component make = (~window, ()) => {
   let%hook (state, dispatch) =
-    Hooks.reducer(
-      ~initialState=TimeTracker.State.init(),
-      TimeTracker.State.reducer,
-    );
+    Hooks.reducer(~initialState=TimeTracker.init(), TimeTracker.reducer);
 
   let onKeyDown = (event: NodeEvents.keyEventParams) =>
     if (event.keycode == 13) {
       dispatch(TaskAdded);
     };
 
-  <View style=Styles.container>
+  <View style=Styles.taskList>
     <View>
       <Input
         placeholder="Task name"
@@ -42,9 +25,7 @@ let%component make = (~window, ()) => {
       <Ticker onTick={t => dispatch(Tick(t |> Time.toFloatSeconds))}>
         {state.tasks
          |> List.rev
-         |> List.map((task: TimeTracker.Task.t) =>
-              <TaskRow window task dispatch />
-            )
+         |> List.map((task: Task.t) => <TaskRow window task dispatch />)
          |> React.listToElement}
       </Ticker>
     </ScrollView>
