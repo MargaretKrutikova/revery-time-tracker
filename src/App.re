@@ -20,7 +20,7 @@ let init = app => {
 
   let text =
     Style.[
-      fontSize(22),
+      fontSize(28),
       fontFamily("Roboto-Regular.ttf"),
       color(Colors.black),
     ];
