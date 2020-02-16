@@ -5,7 +5,12 @@ open Revery.UI.Components;
 let init = app => {
   let _ = Revery.Log.listen((_, msg) => print_endline("LOG: " ++ msg));
 
-  let win = App.createWindow(app, "Time tracker");
+  let win =
+    App.createWindow(
+      ~createOptions=WindowCreateOptions.create(~width=650, ~height=500, ()),
+      app,
+      "Time tracker",
+    );
 
   let containerStyle =
     Style.[

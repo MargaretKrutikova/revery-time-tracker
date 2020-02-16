@@ -2,25 +2,6 @@ open Revery;
 open Revery.UI;
 open Revery.UI.Components;
 
-module Styles = {
-  let container =
-    Style.[
-      paddingHorizontal(20),
-      paddingVertical(20),
-      alignItems(`Stretch),
-      flexGrow(1),
-    ];
-
-  let input =
-    Style.[
-      fontSize(24),
-      border(~width=0, ~color=Colors.transparentWhite),
-      borderBottom(~width=1, ~color=Colors.black),
-      marginBottom(15),
-      minWidth(500),
-    ];
-};
-
 let%component make = () => {
   let%hook (state, dispatch) =
     Hooks.reducer(~initialState=TimeTracker.init(), TimeTracker.reducer);
@@ -30,7 +11,7 @@ let%component make = () => {
       dispatch(TaskAdded);
     };
 
-  <View style=Styles.container>
+  <View style=Styles.taskList>
     <View>
       <Input
         placeholder="Task name"

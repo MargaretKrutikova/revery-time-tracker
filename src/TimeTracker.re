@@ -1,4 +1,5 @@
 type task = {name: string};
+
 type state = {
   newTaskName: string,
   tasks: list(task),
