@@ -3,14 +3,7 @@ open Revery.UI;
 open Revery.UI.Components;
 
 module Styles = {
-  let container =
-    Style.[
-      paddingHorizontal(20),
-      paddingVertical(20),
-      alignItems(`Stretch),
-      flexGrow(1),
-    ];
-
+  let container = Style.[padding(20), alignItems(`Stretch), flexGrow(1)];
   let input =
     Style.[
       fontSize(24),

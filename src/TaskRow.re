@@ -13,7 +13,7 @@ module Styles = {
 
   let container = status =>
     Style.[
-      height(50),
+      height(60),
       flexDirection(`Row),
       alignItems(`Center),
       justifyContent(`SpaceBetween),
@@ -24,11 +24,11 @@ module Styles = {
 
   let text =
     Style.[
-      fontSize(22),
+      fontSize(30),
       fontFamily("Roboto-Regular.ttf"),
       color(Colors.black),
     ];
-  let taskName = text;
+  let taskName = List.append(Style.[flexGrow(1)], text);
   let time = text;
 
   let actions =
@@ -40,7 +40,7 @@ module Styles = {
     ];
 };
 
-let make = (~task: TimeTracker.Task.t, ~window, ~dispatch, ()) => {
+let make = (~task: TimeTracker.Task.t, ~window: Window.t, ~dispatch, ()) => {
   let time =
     switch (task.status) {
     | Running(time)
@@ -49,17 +49,25 @@ let make = (~task: TimeTracker.Task.t, ~window, ~dispatch, ()) => {
     | _ => ""
     };
 
-  let showTaskCantBeDoneAlert = (window: Window.t) => {
+  let showTaskCantBeDoneAlert = () => {
     Sdl2.MessageBox.showSimple(
       Warning,
       "Task can't be set to done",
-      "Task must be started n order to be moved to done.",
+      "Task must be started in order to be moved to done.",
       Some(window.sdlWindow),
     );
   };
 
+  let handleTaskDone = _ => {
+    switch (task.status) {
+    | NotStarted => showTaskCantBeDoneAlert()
+    | _ => ignore()
+    };
+    dispatch(State.TaskDone(task.id));
+  };
+
   <View style={Styles.container(task.status)}>
-    <View> <Text style=Styles.taskName text={task.name} /> </View>
+    <Text style=Styles.taskName text={task.name} /> 
     <View> <Text style=Styles.time text=time /> </View>
     <View style=Styles.actions>
       {switch (task.status) {
@@ -80,13 +88,7 @@ let make = (~task: TimeTracker.Task.t, ~window, ~dispatch, ()) => {
          />
        | _ => <View />
        }}
-      <IconButton
-        asset="done.png"
-        onClick={_ => {
-          showTaskCantBeDoneAlert(window);
-          dispatch(State.TaskDone(task.id));
-        }}
-      />
+      <IconButton asset="done.png" onClick=handleTaskDone />
       <IconButton
         asset="remove.png"
         width=25
