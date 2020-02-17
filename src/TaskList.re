@@ -6,6 +6,11 @@ let%component make = () => {
   let%hook (state, dispatch) =
     Hooks.reducer(~initialState=TimeTracker.init(), TimeTracker.reducer);
 
+  let%hook () =
+    Hooks.tick(~tickRate=Time.zero, t =>
+      dispatch(Tick(t |> Time.toFloatSeconds))
+    );
+
   let onKeyDown = (event: NodeEvents.keyEventParams) =>
     if (event.keycode == 13) {
       dispatch(TaskAdded);
@@ -21,13 +26,11 @@ let%component make = () => {
         onKeyDown
       />
     </View>
-    <Ticker onTick={t => dispatch(Tick(t |> Time.toFloatSeconds))}>
-      <View>
-        {state.tasks
-         |> List.rev
-         |> List.map((task: TimeTracker.task) => <TaskRow task />)
-         |> React.listToElement}
-      </View>
-    </Ticker>
+    <View>
+      {state.tasks
+        |> List.rev
+        |> List.map((task: TimeTracker.task) => <TaskRow task />)
+        |> React.listToElement}
+    </View>
   </View>;
 };
