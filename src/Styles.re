@@ -15,7 +15,7 @@ let input =
     border(~width=0, ~color=Colors.transparentWhite),
     borderBottom(~width=1, ~color=Colors.black),
     marginBottom(15),
-    minWidth(500),
+    minWidth(400),
   ];
 
 let taskRow =
