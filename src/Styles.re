@@ -21,7 +21,7 @@ let taskRow = status =>
 
 let text =
   Style.[
-    fontSize(30),
+    fontSize(26),
     fontFamily("Roboto-Regular.ttf"),
     color(Colors.black),
   ];
