@@ -3,7 +3,7 @@ type task = {
   elapsed: float,
 };
 
-type t = {
+type state = {
   newTaskName: string,
   tasks: list(task),
 };
