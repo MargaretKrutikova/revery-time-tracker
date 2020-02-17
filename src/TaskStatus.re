@@ -4,6 +4,7 @@ type t =
   | Paused(float)
   | Done(float);
 
+// function per each state transition
 let toStarted =
   fun
   | NotStarted => Running(0.0)
@@ -19,18 +20,20 @@ let toResumed =
   | Paused(time) => Running(time)
   | other => other;
 
+// define business rules
 let toDone =
   fun
   | Running(time)
   | Paused(time) => Done(time)
   | other => other;
 
-let tick = (tick, status) =>
+let tick = (elapsed, status) =>
   switch (status) {
-  | Running(time) => Running(time +. tick)
+  | Running(time) => Running(time +. elapsed)
   | other => other
   };
 
+// utility functions
 let isRunning =
   fun
   | Running(_) => true
