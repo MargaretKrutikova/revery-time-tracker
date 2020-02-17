@@ -7,7 +7,7 @@ let init = app => {
 
   let win =
     App.createWindow(
-      ~createOptions=WindowCreateOptions.create(~width=650, ~height=500, ()),
+      ~createOptions=WindowCreateOptions.create(~width=750, ~height=500, ()),
       app,
       "Time tracker",
     );
