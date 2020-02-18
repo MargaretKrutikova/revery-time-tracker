@@ -15,7 +15,7 @@ let%component make = () => {
     <View>
       <Input
         placeholder="Task name"
-        onChange={(value, _) => {dispatch(NewTaskNameSet(value))}}
+        onChange={(value, _) => dispatch(NewTaskNameSet(value))}
         value={state.newTaskName}
         style=Styles.input
         onKeyDown
