@@ -27,6 +27,7 @@ let init = app => {
 
   let element =
     <View style=containerStyle> <Text style=text text="Hello world" /> </View>;
+
   let _ = UI.start(win, element);
   ();
 };
