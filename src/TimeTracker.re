@@ -37,7 +37,7 @@ let getRunningTask = state =>
 let pauseRunningTask = state =>
   switch (getRunningTask(state)) {
   | None => state
-  | Some(task) => state |> updateTaskStatus(task.id, TaskStatus.toPaused)
+  | Some(task) => state |> updateTaskStatus(task.id, TaskStatus.pause)
   };
 
 let reducer = (action, state) => {
@@ -45,11 +45,11 @@ let reducer = (action, state) => {
   | NewTaskNameSet(name) => {...state, newTaskName: name}
 
   | TaskStarted(id) =>
-    state |> pauseRunningTask |> updateTaskStatus(id, TaskStatus.toStarted)
-  | TaskPaused(id) => state |> updateTaskStatus(id, TaskStatus.toPaused)
+    state |> pauseRunningTask |> updateTaskStatus(id, TaskStatus.start)
+  | TaskPaused(id) => state |> updateTaskStatus(id, TaskStatus.pause)
   | TaskResumed(id) =>
-    state |> pauseRunningTask |> updateTaskStatus(id, TaskStatus.toResumed)
-  | TaskDone(id) => state |> updateTaskStatus(id, TaskStatus.toDone)
+    state |> pauseRunningTask |> updateTaskStatus(id, TaskStatus.resume)
+  | TaskDone(id) => state |> updateTaskStatus(id, TaskStatus.finish)
   | TaskRemoved(id) => state |> removeTask(id)
 
   | Tick(tick) =>

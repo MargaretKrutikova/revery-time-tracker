@@ -5,24 +5,24 @@ type t =
   | Done(float);
 
 /* function per each state transition */
-let toStarted = status =>
+let start = status =>
   switch (status) {
   | NotStarted => Running(0.0)
   | other => other
   };
 
-let toPaused =
+let pause =
   fun
   | Running(time) => Paused(time)
   | other => other;
 
-let toResumed =
+let resume =
   fun
   | Paused(time) => Running(time)
   | other => other;
 
 /* define business rules */
-let toDone =
+let finish =
   fun
   | Running(time)
   | Paused(time) => Done(time)
