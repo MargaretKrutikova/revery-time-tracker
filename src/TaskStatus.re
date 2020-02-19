@@ -34,7 +34,7 @@ let tick = (elapsed, status) =>
   | other => other
   };
 
- /* utility functions */
+/* utility functions */
 let isRunning =
   fun
   | Running(_) => true

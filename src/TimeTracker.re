@@ -9,14 +9,14 @@ type action =
   | NewTaskNameSet(string)
   | TaskAdded
   | Tick(float)
-  // action for each task status transition
+  /* action for each task status transition */
   | TaskStarted(string)
   | TaskPaused(string)
   | TaskResumed(string)
   | TaskDone(string)
   | TaskRemoved(string);
 
-// utility functions
+/* utility functions */
 let updateTaskById = (id, update, tasks) =>
   List.map((task: Task.t) => task.id == id ? update(task) : task, tasks);
 
